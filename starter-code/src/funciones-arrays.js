@@ -1,5 +1,20 @@
 // Find the maximum
 
+// Max of two numbers
+function maxOfTwoNumbers(a, b) {
+
+  let n = 0;
+
+  if (a > b) {
+    n = a;
+  }
+  else {
+    n = b;
+  }
+
+  return n;
+}
+
 // Finding Longest Word
 let words = [
   'mystery',
@@ -11,17 +26,53 @@ let words = [
   'crackpot'
 ];
 
-    
+// Finding Longest Word
+function findLongestWord(arr_paraules) {
 
+  let n = 0;
+
+  for (let i = 0; i < arr_paraules.length; i++) {
+
+    if (arr_paraules[i].length > arr_paraules[n].length) {
+      n = i;
+    }
+  }
+
+  return arr_paraules[n];
+}
 
 console.log(findLongestWord(words));
+
 // Calculating a Sum
+function sumArray(arr) {
+
+  let asd = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    asd += arr[i];
+  }
+  return asd;
+}
 
 let numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
 
 // Calculate the Average
-
 let numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
+
+function averageNumbers(arr) {
+
+  let total = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    total += arr[i];
+  }
+
+  if (arr.length == 0) {
+    return undefined;
+  }
+  return (total / arr.length);
+}
+
 
 // Array of Strings
 let wordsArr = [
@@ -36,6 +87,21 @@ let wordsArr = [
   'fuel',
   'palace'
 ];
+
+function averageWordLength(arr) {
+
+  let total = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    total += arr[i].length;
+  }
+
+  if (arr.length == 0) {
+    return undefined;
+  }
+  return (total / arr.length);
+
+}
 
 // Unique Arrays
 let wordsUnique = [
@@ -52,6 +118,16 @@ let wordsUnique = [
   'bring'
 ];
 
+function uniquifyArray(elem) {
+
+  if (elem == 0) {
+    return undefined;
+  }
+
+  return elem.filter((a, b) => elem.indexOf(a) === b);
+}
+
+
 // Finding Elements
 let wordsFind = [
   'machine',
@@ -63,6 +139,27 @@ let wordsFind = [
   'truth',
   'disobedience'
 ];
+
+function doesWordExist(arr, palabra_a_busar) {
+
+  let n = 0;
+
+  if (arr.length > 0) {
+    for (let i = 0; i < arr.length; i++) {
+
+      if (arr.includes(palabra_a_busar)) {
+        n++;
+      }
+    }
+  }
+
+  if (n >= 1) {
+    return true;
+  }
+
+  return false;
+}
+
 
 // Counting Repetion
 let wordsCount = [
@@ -78,7 +175,31 @@ let wordsCount = [
   'disobedience',
   'matter'
 ];
+
+function howManyTimes(arr, palabra_a_busar) {
+  let n = 0;
+
+  if (arr.length > 0) {
+    for (let i = 0; i < arr.length; i++) {
+
+      if (arr[i].includes(palabra_a_busar)) {
+        n++;
+      }
+    }
+  }
+  else {
+    return undefined;
+  }
+
+  return n;
+}
+
+
 // Bonus Quest
+
+const DIAGONAL = 0;
+const HORIZONTAL = 1;
+const VERTICAL = 2;
 
 let matrix = [
   [8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8],
@@ -102,3 +223,65 @@ let matrix = [
   [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
+
+
+function greatestProduct(matriz) {
+
+  let numero_maximo = 0;
+  let mayor_numero_horizontal = mirar_matriz(matriz, HORIZONTAL);
+  let mayor_numero_vertical = mirar_matriz(matriz, VERTICAL);
+  let mayor_numero_diagonal = mirar_matriz(matriz, DIAGONAL);
+
+  numero_maximo = mayor_numero_horizontal > mayor_numero_vertical ? mayor_numero_horizontal : mayor_numero_vertical;
+  numero_maximo = numero_maximo > mayor_numero_diagonal ? numero_maximo : mayor_numero_diagonal;
+
+  return numero_maximo;
+}
+
+function mirar_matriz(matriz, direccion) {
+  let mayor_numero = 0;
+
+  for (let _Y = 0; _Y < matriz.length; _Y++) { // eje Y ( mira una columna )
+    for (let _X = 0; _X < matriz[0].length; _X++) { // eje X ( mira una fila )
+
+      let resultado = multiplicador_matricial(matriz, _X, _Y, 4, direccion); // 4 = ancho máximo
+
+      if (resultado > mayor_numero) {
+        mayor_numero = resultado;
+      }
+    }
+  }
+  return mayor_numero;
+}
+
+function multiplicador_matricial(matriz, eje_x, eje_y, tamany_operacio, operacio) {
+
+  let numero_retorno = 1;
+
+  for (let i = 0; i < tamany_operacio; i++) {
+
+    if (eje_y > matriz.length-1) {
+      break;
+    }
+
+    if (matriz[eje_y][eje_x] != undefined) {
+      numero_retorno *= matriz[eje_y][eje_x];
+    }
+
+    switch (operacio) {
+      case DIAGONAL:
+        eje_x++;
+        eje_y++;
+        break;
+
+      case HORIZONTAL:
+        eje_x++;
+        break;
+
+      case VERTICAL:
+        eje_y++;
+        break;
+    }
+  }
+  return numero_retorno;
+}
